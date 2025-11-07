@@ -1,9 +1,11 @@
-import React from "react";
+import CharactersList from "./components/CharactersList";
 
-export default function App() {
+function App() {
   return (
     <div>
-      <h1 className="bg-amber-400">hola</h1>
+      <CharactersList search="" />
     </div>
   );
 }
+
+export default App;
