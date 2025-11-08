@@ -1,9 +1,10 @@
 import React from "react";
+import Clews from "./Clews";
 
 export default function App() {
   return (
     <div>
-      <h1 className="bg-amber-400">hola</h1>
+      <Clews />
     </div>
   );
 }
