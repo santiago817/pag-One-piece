@@ -26,6 +26,13 @@ function App() {
         </Routes>
       </div>
     </Router>
+import CharactersList from "./components/CharactersList";
+
+function App() {
+  return (
+    <div>
+      <CharactersList search="" />
+    </div>
   );
 }
 
