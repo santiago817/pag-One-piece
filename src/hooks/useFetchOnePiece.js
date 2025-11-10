@@ -22,7 +22,7 @@ export function useFetchOnePiece(endpoint) {
 
         const json = await response.json();
 
-        // ✅ La API devuelve un array directo
+
         if (isMounted) {
           if (Array.isArray(json)) {
             setData(json);

@@ -1,3 +1,43 @@
+import React, { useEffect, useState } from "react";
+
+export default function CharactersList({ search }) {
+  const [characters, setCharacters] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      try {
+        const res = await fetch("https://api.api-onepiece.com/v2/characters/en");
+        const data = await res.json();
+        setCharacters(data.slice(0, 10)); 
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCharacters();
+  }, []);
+
+  if (loading) return <p className="text-center mt-10">Cargando personajes...</p>;
+
+  return (
+    <div className="flex flex-wrap gap-5 justify-center mt-10">
+      {characters.map((char) => (
+        <div key={char.id} className="border rounded-lg p-4 w-52 text-center shadow-md">
+          <img
+            src={char.image || "https://via.placeholder.com/150"}
+            alt={char.name}
+            className="w-36 h-36 object-cover mx-auto"
+          />
+          <h3 className="mt-2 font-semibold">{char.name}</h3>
+        </div>
+      ))}
+    </div>
+  );
+}
+=======
 import { useFetchOnePiece } from "../hooks/useFetchOnePiece";
 
 export default function CharactersList({ search }) {
@@ -6,12 +46,10 @@ export default function CharactersList({ search }) {
   if (loading) return <p>Cargando personajes...</p>;
   if (error) return <p>Error al obtener personajes: {error}</p>;
 
-  // ✅ Filtro por nombre
   const filteredCharacters = characters.filter((char) =>
     char.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  // ✅ Utilidad para traducir estados
   const translateStatus = (status) => {
     const map = {
       vivant: "Vivo",
@@ -21,7 +59,6 @@ export default function CharactersList({ search }) {
     return map[status?.toLowerCase()] || status || "Desconocido";
   };
 
-  // ✅ Formateador de recompensa
   const formatBounty = (value) => {
     if (!value) return "Sin recompensa";
     return new Intl.NumberFormat("es-MX").format(Number(value));
@@ -51,17 +88,16 @@ export default function CharactersList({ search }) {
               border: "1px solid #e5e5e5",
               boxShadow: "0 3px 6px rgba(0,0,0,0.08)",
             }}
-          >
-            {/* ✅ Nombre */}
+          
             <h3 style={{ marginBottom: "10px" }}>{char.name}</h3>
 
-            {/* ✅ Rol */}
+            
             <p><strong>Rol:</strong> {char.job || "Desconocido"}</p>
 
-            {/* ✅ Tripulación */}
+            
             <p><strong>Tripulación:</strong> {char.crew?.name || "Ninguna"}</p>
 
-            {/* ✅ Fruta */}
+            
             <p>
               <strong>Fruta:</strong>{" "}
               {char.fruit?.name
@@ -69,16 +105,16 @@ export default function CharactersList({ search }) {
                 : "Ninguna"}
             </p>
 
-            {/* ✅ Edad */}
+           }
             <p><strong>Edad:</strong> {char.age?.replace(" ans", "") || "N/A"}</p>
 
-            {/* ✅ Recompensa */}
+            
             <p>
               <strong>Recompensa:</strong>{" "}
               {formatBounty(char.bounty)}
             </p>
 
-            {/* ✅ Estado traducido */}
+            
             <p><strong>Estado:</strong> {translateStatus(char.status)}</p>
           </div>
         ))}
