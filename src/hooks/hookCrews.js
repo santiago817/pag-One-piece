@@ -27,6 +27,7 @@ export default function useCrews(count = 10) {
         setLoading(false);
       }
     };
+    console.log("hola mundo");
 
     fetchCrews();
   }, [count]);
